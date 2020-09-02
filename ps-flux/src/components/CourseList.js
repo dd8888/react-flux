@@ -1,5 +1,6 @@
 import React from "react";
 import propTypes from "prop-types";
+import { Link } from "react-router-dom";
 
 function CourseList(props) {
   return (
@@ -19,7 +20,9 @@ function CourseList(props) {
 const renderCoursesRows = (course) => {
   return (
     <tr key={course.id}>
-      <td>{course.title}</td>
+      <td>
+        <Link to={"/course/" + course.title}>{course.title}</Link>
+      </td>
       <td>{course.authorId}</td>
       <td>{course.category}</td>
     </tr>
