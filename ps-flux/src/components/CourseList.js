@@ -1,6 +1,7 @@
 import React from "react";
 import propTypes from "prop-types";
 import { Link } from "react-router-dom";
+import { toast } from "react-toastify";
 
 function CourseList(props) {
   return (
@@ -10,26 +11,35 @@ function CourseList(props) {
           <th>Title</th>
           <th>Authours ID</th>
           <th>Category</th>
+          <th>Delete</th>
         </tr>
       </thead>
-      <tbody>{props.courses.map(renderCoursesRows)}</tbody>
+      <tbody>
+        {props.courses.map((course) => (
+          <tr key={course.id}>
+            <td>
+              <Link to={"/course/" + course.slug}>{course.title}</Link>
+            </td>
+            <td>{course.authorId}</td>
+            <td>{course.category}</td>
+            <td
+              className="btn btn-danger"
+              onClick={() => {
+                props.deleteCourse(course.id);
+                toast.warn("Course deleted");
+              }}
+            >
+              Delete
+            </td>
+          </tr>
+        ))}
+      </tbody>
     </table>
   );
 }
 
-const renderCoursesRows = (course) => {
-  return (
-    <tr key={course.id}>
-      <td>
-        <Link to={"/course/" + course.slug}>{course.title}</Link>
-      </td>
-      <td>{course.authorId}</td>
-      <td>{course.category}</td>
-    </tr>
-  );
-};
-
 CourseList.propTypes = {
+  deleteCourse: propTypes.func.isRequired,
   courses: propTypes.arrayOf(
     propTypes.shape({
       id: propTypes.number.isRequired,

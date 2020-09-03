@@ -1,5 +1,6 @@
 import React from "react";
 import TextInput from "./common/TextInput";
+import PropTypes from "prop-types";
 
 function CourseForm(props) {
   return (
@@ -7,9 +8,9 @@ function CourseForm(props) {
       <TextInput
         id="title"
         label="Title"
+        onChange={props.onChange}
         name="title"
         value={props.course.title}
-        onChange={props.onChange}
         error={props.errors.title}
       />
 
@@ -35,10 +36,10 @@ function CourseForm(props) {
 
       <TextInput
         id="category"
-        name="category"
         label="Category"
-        value={props.course.category}
+        name="category"
         onChange={props.onChange}
+        value={props.course.category}
         error={props.errors.category}
       />
 
@@ -46,5 +47,12 @@ function CourseForm(props) {
     </form>
   );
 }
+
+CourseForm.propTypes = {
+  course: PropTypes.object.isRequired,
+  onSubmit: PropTypes.func.isRequired,
+  onChange: PropTypes.func.isRequired,
+  errors: PropTypes.object.isRequired,
+};
 
 export default CourseForm;
